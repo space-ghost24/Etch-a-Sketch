@@ -22,27 +22,20 @@ function createGrid(size) {
         cell.classList.add('cell');
         cell.style.height = `${cellSize}px`;
         cell.style.width = `${cellSize}px`;
-
-        // Track the cell color and interaction count
-        let cellColor = 'rgb(255, 255, 255)';  // Default color white
-
-        // Ensure default color is white until user interacts
-        cell.style.backgroundColor = cellColor;
-
+        // Track the cell color
+        cell.style.backgroundColor = 'rgb(255, 255, 255)';  // Default color white     
         cell.addEventListener('mouseover', () => {
             if (eraserMode) {
                 cell.style.backgroundColor = 'rgb(255,255,255)';
-                cellColor = 'rgb(255, 255, 255)';
             } else if (randomColor) {
+                // Apply random color
                 const r = Math.floor(Math.random() * 256);
                 const g = Math.floor(Math.random() * 256);
                 const b = Math.floor(Math.random() * 256);
-                cellColor = `rgb(${r}, ${g}, ${b})`;
-                cell.style.backgroundColor = cellColor;
+                cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
             } else if (darkenMode) {
-                // Apply progressive darkening effect with interaction count
-                cell.style.backgroundColor = darkenColor(cellColor);
-                cellColor = cell.style.backgroundColor;  // Update cell's color after darkening
+                // Apply progressive darkening effect
+                cell.style.backgroundColor = darkenColor(cell.style.backgroundColor);              
             } else {
                 // Default behavior with currentColor
                 cell.style.backgroundColor = currentColor;
