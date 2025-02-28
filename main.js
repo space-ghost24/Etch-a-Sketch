@@ -26,12 +26,10 @@ function createGrid(size) {
 
         // Track the cell color and interaction count
         let cellColor = 'rgb(255, 255, 255)';  // Default color white
-        let interactionCount = 0; // Track the number of interactions with this cell
 
         cell.addEventListener('mouseover', () => {
             if (eraserMode) {
                 cell.style.backgroundColor = 'rgb(255,255,255)';
-                interactionCount = 0;  // Reset interaction count when erased
                 cellColor = 'rgb(255, 255, 255)';
             } else if (randomColor) {
                 const r = Math.floor(Math.random() * 256);
@@ -39,24 +37,17 @@ function createGrid(size) {
                 const b = Math.floor(Math.random() * 256);
                 cellColor = `rgb(${r}, ${g}, ${b})`;
                 cell.style.backgroundColor = cellColor;
-                interactionCount = 0;  // Reset interaction count with random color
             } else if (darkenMode) {
                 // Apply progressive darkening effect with interaction count
-                cell.style.backgroundColor = darkenColor(cellColor, interactionCount);
-                interactionCount++;  // Increase interaction count after darkening
+                cell.style.backgroundColor = darkenColor(cellColor);
                 cellColor = cell.style.backgroundColor;  // Update cell's color after darkening
             } else {
                 // Default behavior with currentColor
                 cell.style.backgroundColor = currentColor;
                 cellColor = currentColor;  // Update cell's color with picked one
-                interactionCount = 0;  // Reset interaction count on default color
-            }
-
-            // If the cell has been interacted with 10 times, make it black
-            if (interactionCount >= 10) {
-                cell.style.backgroundColor = 'rgb(0, 0, 0)';
             }
         });
+        gridWrapper.style.border = '2px solid #333';
         container.appendChild(cell);
     }
 }
@@ -106,7 +97,7 @@ darken.addEventListener('click', () => {
 })
 
 //Darken color by 10%
-function darkenColor(color, interactionCount) {
+function darkenColor(color) {
     let [r, g, b] = color.match(/\d+/g).map(Number);
     let darkenAmount = Math.floor(255 * 0.1); // Darken by 10% per interaction
 
