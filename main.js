@@ -1,6 +1,5 @@
 // Select elements
 const container = document.querySelector('.container');
-const gridWrapper = document.querySelector('.gridWrapper');
 const newGrid = document.querySelector('.gridBtn');
 const random = document.querySelector('.randomColor');
 const colorPick = document.querySelector('.colorPick');
@@ -27,6 +26,9 @@ function createGrid(size) {
         // Track the cell color and interaction count
         let cellColor = 'rgb(255, 255, 255)';  // Default color white
 
+        // Ensure default color is white until user interacts
+        cell.style.backgroundColor = cellColor;
+
         cell.addEventListener('mouseover', () => {
             if (eraserMode) {
                 cell.style.backgroundColor = 'rgb(255,255,255)';
@@ -44,10 +46,8 @@ function createGrid(size) {
             } else {
                 // Default behavior with currentColor
                 cell.style.backgroundColor = currentColor;
-                cellColor = currentColor;  // Update cell's color with picked one
             }
         });
-        gridWrapper.style.border = '2px solid #333';
         container.appendChild(cell);
     }
 }
